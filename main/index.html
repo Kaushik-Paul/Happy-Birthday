@@ -3,152 +3,258 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Ultimate Birthday Bash!</title>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700&family=Pacifico&display=swap" rel="stylesheet">
+    <title>🎂 Happy Birthday! 🎉</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
-    <!-- FontAwesome for Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;600;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div id="loading-screen">
-        <div class="loader">
-            <i class="fas fa-birthday-cake fa-spin"></i>
-            <p>Loading Awesomeness...</p>
-        </div>
-    </div>
+    <!-- Cursor sparkle trail -->
+    <div id="cursor-trail"></div>
+    
+    <!-- Background particles -->
+    <div id="particles-container"></div>
+    
+    <!-- Floating balloons -->
+    <div id="balloons-container"></div>
+    
+    <!-- Confetti container -->
+    <div id="confetti-container"></div>
 
-    <div id="main-container" class="hidden">
-        
-        <!-- Audio Control -->
-        <div id="audio-control">
-            <button id="btn-audio-toggle" class="icon-btn"><i class="fas fa-volume-mute"></i></button>
-        </div>
-
-        <!-- Scene 1: Welcome -->
-        <div id="scene-welcome" class="scene active">
-            <div class="content-box">
-                <h1 class="animate-pop-in">Hey There! <span class="wave">👋</span></h1>
-                <p class="subtitle">Something special awaits you...</p>
-                <button id="btn-enter" class="btn-primary pulse-btn">Let's Go!</button>
-            </div>
-        </div>
-
-        <!-- Scene 2: Lights (Interactive) -->
-        <div id="scene-lights" class="scene">
-            <div class="dark-overlay"></div>
-            <div class="content-box light-content">
-                <h2>It's kinda dark in here...</h2>
-                <p>Can you find the switch?</p>
-                <button id="btn-light-switch" class="switch-btn"></button>
-            </div>
-        </div>
-
-        <!-- Scene 3: Music Visualizer & Party Start -->
-        <div id="scene-party" class="scene">
-            <canvas id="visualizer"></canvas>
-            <div class="content-box">
-                <h1 class="neon-text">Let's Get This Party Started!</h1>
-                <div class="dj-deck">
-                    <div class="record spin"></div>
-                    <div class="controls">
-                        <button id="btn-play-music" class="btn-secondary"><i class="fas fa-play"></i> Drop the Beat</button>
-                    </div>
+    <!-- STEP 1: Welcome Screen with Mystery Box -->
+    <section id="step1" class="step active">
+        <div class="mystery-box-container">
+            <h1 class="glowing-text">A Special Surprise Awaits!</h1>
+            <p class="subtitle">Click the mystery box to begin your birthday adventure...</p>
+            <div class="mystery-box" id="mysteryBox">
+                <div class="box-lid"></div>
+                <div class="box-body">
+                    <span class="question-mark">?</span>
                 </div>
+                <div class="box-glow"></div>
             </div>
+            <div class="hint-text">✨ Go ahead, click it! ✨</div>
         </div>
+    </section>
 
-        <!-- Scene 4: Memory Lane (Slideshow) -->
-        <div id="scene-memories" class="scene">
-            <h2>A Trip Down Memory Lane 📸</h2>
-            <div class="gallery-container">
-                <div class="gallery">
-                    <div class="photo-card active" data-img="resources/photos/photo1.svg">
-                        <img src="resources/photos/photo1.svg" alt="Memory 1">
-                        <p class="caption">Remember this?</p>
-                    </div>
-                    <div class="photo-card" data-img="resources/photos/photo2.svg">
-                        <img src="resources/photos/photo2.svg" alt="Memory 2">
-                        <p class="caption">Good times!</p>
-                    </div>
-                    <div class="photo-card" data-img="resources/photos/photo3.svg">
-                        <img src="resources/photos/photo3.svg" alt="Memory 3">
-                        <p class="caption">Adventures!</p>
-                    </div>
-                </div>
-                <div class="gallery-nav">
-                    <button id="prev-photo" class="nav-btn"><i class="fas fa-chevron-left"></i></button>
-                    <button id="next-photo" class="nav-btn"><i class="fas fa-chevron-right"></i></button>
-                </div>
+    <!-- STEP 2: Balloon Pop Game -->
+    <section id="step2" class="step">
+        <div class="balloon-game-container">
+            <h2 class="game-title">🎈 Pop the Balloons! 🎈</h2>
+            <p class="game-instruction">Pop all the balloons to reveal your birthday message!</p>
+            <div class="score-display">
+                <span>Balloons Left: </span>
+                <span id="balloonCount">10</span>
             </div>
-            <button id="btn-continue-memories" class="btn-primary">Next Surprise &rarr;</button>
+            <div id="balloonGameArea" class="balloon-game-area"></div>
         </div>
+    </section>
 
-        <!-- Scene 5: Balloon Popping Game -->
-        <div id="scene-game" class="scene">
-            <div class="game-header">
-                <h2>Pop the Balloons to Find the Key! 🗝️</h2>
-                <p>Score: <span id="score">0</span></p>
+    <!-- STEP 3: Cake with Candles -->
+    <section id="step3" class="step">
+        <div class="cake-container">
+            <h2 class="cake-title" id="cakeTitle">Happy Birthday!</h2>
+            <p class="blow-instruction">🌬️ Click the candles to blow them out! Make a wish! 🌬️</p>
+            <div class="candles-status">
+                <span>Candles remaining: </span>
+                <span id="candleCount">5</span>
             </div>
-            <div id="game-area"></div>
-        </div>
-
-        <!-- Scene 6: Gift Box (Requires Key) -->
-        <div id="scene-gift" class="scene">
-            <h2>You found the key!</h2>
-            <div class="gift-container">
-                <div class="gift-box" id="gift-box">
-                    <div class="lid"></div>
-                    <div class="box"></div>
-                    <div class="ribbon"></div>
-                </div>
-            </div>
-            <p class="instruction">Click to Open!</p>
-        </div>
-
-        <!-- Scene 7: The Cake -->
-        <div id="scene-cake" class="scene">
-            <h1 class="rainbow-text">Happy Birthday!</h1>
-            <div class="cake-container">
+            <div class="cake-wrapper">
                 <div class="cake">
-                    <div class="candle">
-                        <div class="flame" id="flame"></div>
+                    <div class="candles-container" id="candlesContainer">
+                        <div class="candle" data-candle="1"><div class="flame"></div></div>
+                        <div class="candle" data-candle="2"><div class="flame"></div></div>
+                        <div class="candle" data-candle="3"><div class="flame"></div></div>
+                        <div class="candle" data-candle="4"><div class="flame"></div></div>
+                        <div class="candle" data-candle="5"><div class="flame"></div></div>
                     </div>
+                    <div class="cake-top"></div>
+                    <div class="cake-middle"></div>
+                    <div class="cake-bottom"></div>
+                    <div class="cake-plate"></div>
                 </div>
             </div>
-            <div class="mic-controls">
-                <i class="fas fa-microphone"></i>
-                <p>Blow into your mic to extinguish the candle!</p>
-            </div>
         </div>
+    </section>
 
-        <!-- Scene 8: Final Card -->
-        <div id="scene-card" class="scene">
-            <div class="card-wrapper">
-                <div class="card">
-                    <div class="card-front">
-                        <h2>To You</h2>
-                        <i class="fas fa-heart"></i>
-                    </div>
-                    <div class="card-inner">
-                        <h3>Dear Friend,</h3>
-                        <p>May your day be filled with endless joy, laughter, and amazing moments. You deserve the world!</p>
-                        <p>Keep shining bright! ✨</p>
-                        <p class="signature">- Your Bestie</p>
-                    </div>
+    <!-- STEP 4: Gift Unwrapping -->
+    <section id="step4" class="step">
+        <div class="gift-container">
+            <h2 class="gift-title">🎁 Time to Open Your Gifts! 🎁</h2>
+            <p class="gift-instruction">Click each gift to unwrap your birthday wishes!</p>
+            <div class="gifts-grid" id="giftsGrid">
+                <div class="gift-box" data-gift="1">
+                    <div class="gift-ribbon"></div>
+                    <div class="gift-bow"></div>
+                    <div class="gift-message">You are amazing! ✨</div>
+                </div>
+                <div class="gift-box" data-gift="2">
+                    <div class="gift-ribbon"></div>
+                    <div class="gift-bow"></div>
+                    <div class="gift-message">Wishing you endless joy! 🌈</div>
+                </div>
+                <div class="gift-box" data-gift="3">
+                    <div class="gift-ribbon"></div>
+                    <div class="gift-bow"></div>
+                    <div class="gift-message">May all your dreams come true! 🌟</div>
+                </div>
+                <div class="gift-box" data-gift="4">
+                    <div class="gift-ribbon"></div>
+                    <div class="gift-bow"></div>
+                    <div class="gift-message">You deserve all the happiness! 💖</div>
                 </div>
             </div>
-            <button id="btn-replay" class="btn-small"><i class="fas fa-redo"></i> Replay</button>
+            <button id="continueToScratch" class="magic-button hidden">
+                <span>Continue to Scratch Card!</span>
+            </button>
         </div>
+    </section>
 
-    </div>
+    <!-- STEP 5: Scratch Card -->
+    <section id="step5" class="step">
+        <div class="scratch-container">
+            <h2 class="scratch-title">🎰 Scratch to Reveal Your Fortune! 🎰</h2>
+            <p class="scratch-instruction">Use your mouse to scratch the card!</p>
+            <div class="scratch-card-wrapper">
+                <canvas id="scratchCard" width="400" height="250"></canvas>
+                <div class="scratch-message" id="scratchMessage">
+                    <span class="fortune-text">This year will be your BEST year yet! 🎊</span>
+                </div>
+            </div>
+            <button id="continueToEmojiCatcher" class="magic-button hidden">
+                <span>Play Emoji Catcher!</span>
+            </button>
+        </div>
+    </section>
 
-    <!-- Audio Element -->
-    <audio id="bg-music" loop>
-        <source src="resources/happy-birthday.mp3" type="audio/mp3"> 
+    <!-- STEP 6: Emoji Catcher Game -->
+    <section id="step6" class="step">
+        <div class="catcher-container">
+            <h2 class="catcher-title">🎯 Catch the Emojis! 🎯</h2>
+            <p class="catcher-instruction">Click the falling emojis to catch them! Avoid 💣 and 👻!</p>
+            <div class="catcher-stats">
+                <span>Score: <span id="catcherScore">0</span></span>
+                <span>Time: <span id="catcherTime">15</span>s</span>
+            </div>
+            <div id="catcherGameArea" class="catcher-game-area"></div>
+            <div id="catcherResult" class="catcher-result hidden"></div>
+            <button id="continueToTyping" class="magic-button hidden">
+                <span>Play Typing Challenge!</span>
+            </button>
+        </div>
+    </section>
+
+    <!-- STEP 7: Typing Challenge -->
+    <section id="step7" class="step">
+        <div class="typing-container">
+            <h2 class="typing-title">⌨️ Typing Challenge! ⌨️</h2>
+            <p class="typing-instruction">Type the words as fast as you can!</p>
+            <div class="typing-stats">
+                <span>Words: <span id="typingScore">0</span></span>
+                <span>Time: <span id="typingTime">20</span>s</span>
+            </div>
+            <div class="typing-word-display">
+                <span id="typingWord">READY</span>
+            </div>
+            <input type="text" id="typingInput" class="typing-input" placeholder="Type here..." autocomplete="off">
+            <div id="typingResult" class="typing-result hidden"></div>
+            <button id="continueToWheel" class="magic-button hidden">
+                <span>Spin the Birthday Wheel!</span>
+            </button>
+        </div>
+    </section>
+
+    <!-- STEP 8: Spin the Wheel -->
+    <section id="step8" class="step">
+        <div class="wheel-container">
+            <h2 class="wheel-title">🎡 Spin the Birthday Wheel! 🎡</h2>
+            <p class="wheel-instruction">Click the wheel to spin and win a birthday blessing!</p>
+            <div class="wheel-wrapper">
+                <div class="wheel-pointer">▼</div>
+                <div class="wheel" id="fortuneWheel">
+                    <div class="wheel-segment" style="--i:0"><span>Love 💕</span></div>
+                    <div class="wheel-segment" style="--i:1"><span>Wealth 💰</span></div>
+                    <div class="wheel-segment" style="--i:2"><span>Health 💪</span></div>
+                    <div class="wheel-segment" style="--i:3"><span>Success 🏆</span></div>
+                    <div class="wheel-segment" style="--i:4"><span>Adventure ✈️</span></div>
+                    <div class="wheel-segment" style="--i:5"><span>Happiness 😊</span></div>
+                    <div class="wheel-segment" style="--i:6"><span>Luck 🍀</span></div>
+                    <div class="wheel-segment" style="--i:7"><span>Wisdom 📚</span></div>
+                </div>
+            </div>
+            <div id="wheelResult" class="wheel-result hidden"></div>
+            <button id="continueToMemory" class="magic-button hidden">
+                <span>Play Memory Game!</span>
+            </button>
+        </div>
+    </section>
+
+    <!-- STEP 9: Memory Card Game -->
+    <section id="step9" class="step">
+        <div class="memory-container">
+            <h2 class="memory-title">🧠 Birthday Memory Game! 🧠</h2>
+            <p class="memory-instruction">Match all the pairs to unlock the finale!</p>
+            <div class="memory-stats">
+                <span>Moves: <span id="moveCount">0</span></span>
+                <span>Pairs Found: <span id="pairsFound">0</span>/4</span>
+            </div>
+            <div class="memory-grid" id="memoryGrid"></div>
+            <button id="continueToFinaleFromMemory" class="magic-button hidden">
+                <span>Go to Grand Finale!</span>
+            </button>
+        </div>
+    </section>
+
+    <!-- STEP 10: Grand Finale -->
+    <section id="step10" class="step finale-step">
+        <div class="finale-container">
+            <div class="fireworks-container" id="fireworksContainer"></div>
+            <div class="finale-content">
+                <h1 class="finale-title" id="finaleTitle">Happy Birthday!</h1>
+                <div class="finale-message">
+                    <p class="finale-wish">🎂 Wishing you a day filled with love, laughter, and all your favorite things! 🎂</p>
+                    <p class="finale-quote">"Another adventure filled year awaits you. Welcome it by celebrating your birthday with pomp and splendor!"</p>
+                </div>
+                <div class="finale-emojis">
+                    🎉🎊🎈🎁🎂🍰🥳🎇🎆✨
+                </div>
+                <button id="restartBtn" class="magic-button restart-btn">
+                    <span>🔄 Celebrate Again!</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Audio elements -->
+    <audio id="popSound" preload="auto">
+        <source src="resources/pop.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="magicSound" preload="auto">
+        <source src="resources/magic.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="birthdayMusic" loop preload="auto">
+        <source src="resources/birthday-music.mp3" type="audio/mpeg">
     </audio>
 
+    <!-- Sound toggle button -->
+    <button id="soundToggle" class="sound-toggle" title="Toggle Sound">
+        🔊
+    </button>
+
+    <!-- Progress indicator -->
+    <div class="progress-indicator" id="progressIndicator">
+        <div class="progress-dot active" data-step="1"></div>
+        <div class="progress-dot" data-step="2"></div>
+        <div class="progress-dot" data-step="3"></div>
+        <div class="progress-dot" data-step="4"></div>
+        <div class="progress-dot" data-step="5"></div>
+        <div class="progress-dot" data-step="6"></div>
+        <div class="progress-dot" data-step="7"></div>
+        <div class="progress-dot" data-step="8"></div>
+        <div class="progress-dot" data-step="9"></div>
+        <div class="progress-dot" data-step="10"></div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="app.js"></script>
 </body>
 </html>
