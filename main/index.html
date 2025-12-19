@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Ultimate Birthday Bash!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700&family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div id="loading-screen">
+        <div class="loader">
+            <i class="fas fa-birthday-cake fa-spin"></i>
+            <p>Loading Awesomeness...</p>
+        </div>
+    </div>
+
+    <div id="main-container" class="hidden">
+        
+        <!-- Audio Control -->
+        <div id="audio-control">
+            <button id="btn-audio-toggle" class="icon-btn"><i class="fas fa-volume-mute"></i></button>
+        </div>
+
+        <!-- Scene 1: Welcome -->
+        <div id="scene-welcome" class="scene active">
+            <div class="content-box">
+                <h1 class="animate-pop-in">Hey There! <span class="wave">👋</span></h1>
+                <p class="subtitle">Something special awaits you...</p>
+                <button id="btn-enter" class="btn-primary pulse-btn">Let's Go!</button>
+            </div>
+        </div>
+
+        <!-- Scene 2: Lights (Interactive) -->
+        <div id="scene-lights" class="scene">
+            <div class="dark-overlay"></div>
+            <div class="content-box light-content">
+                <h2>It's kinda dark in here...</h2>
+                <p>Can you find the switch?</p>
+                <button id="btn-light-switch" class="switch-btn"></button>
+            </div>
+        </div>
+
+        <!-- Scene 3: Music Visualizer & Party Start -->
+        <div id="scene-party" class="scene">
+            <canvas id="visualizer"></canvas>
+            <div class="content-box">
+                <h1 class="neon-text">Let's Get This Party Started!</h1>
+                <div class="dj-deck">
+                    <div class="record spin"></div>
+                    <div class="controls">
+                        <button id="btn-play-music" class="btn-secondary"><i class="fas fa-play"></i> Drop the Beat</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scene 4: Memory Lane (Slideshow) -->
+        <div id="scene-memories" class="scene">
+            <h2>A Trip Down Memory Lane 📸</h2>
+            <div class="gallery-container">
+                <div class="gallery">
+                    <div class="photo-card active" data-img="resources/photos/photo1.svg">
+                        <img src="resources/photos/photo1.svg" alt="Memory 1">
+                        <p class="caption">Remember this?</p>
+                    </div>
+                    <div class="photo-card" data-img="resources/photos/photo2.svg">
+                        <img src="resources/photos/photo2.svg" alt="Memory 2">
+                        <p class="caption">Good times!</p>
+                    </div>
+                    <div class="photo-card" data-img="resources/photos/photo3.svg">
+                        <img src="resources/photos/photo3.svg" alt="Memory 3">
+                        <p class="caption">Adventures!</p>
+                    </div>
+                </div>
+                <div class="gallery-nav">
+                    <button id="prev-photo" class="nav-btn"><i class="fas fa-chevron-left"></i></button>
+                    <button id="next-photo" class="nav-btn"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+            <button id="btn-continue-memories" class="btn-primary">Next Surprise &rarr;</button>
+        </div>
+
+        <!-- Scene 5: Balloon Popping Game -->
+        <div id="scene-game" class="scene">
+            <div class="game-header">
+                <h2>Pop the Balloons to Find the Key! 🗝️</h2>
+                <p>Score: <span id="score">0</span></p>
+            </div>
+            <div id="game-area"></div>
+        </div>
+
+        <!-- Scene 6: Gift Box (Requires Key) -->
+        <div id="scene-gift" class="scene">
+            <h2>You found the key!</h2>
+            <div class="gift-container">
+                <div class="gift-box" id="gift-box">
+                    <div class="lid"></div>
+                    <div class="box"></div>
+                    <div class="ribbon"></div>
+                </div>
+            </div>
+            <p class="instruction">Click to Open!</p>
+        </div>
+
+        <!-- Scene 7: The Cake -->
+        <div id="scene-cake" class="scene">
+            <h1 class="rainbow-text">Happy Birthday!</h1>
+            <div class="cake-container">
+                <div class="cake">
+                    <div class="candle">
+                        <div class="flame" id="flame"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="mic-controls">
+                <i class="fas fa-microphone"></i>
+                <p>Blow into your mic to extinguish the candle!</p>
+            </div>
+        </div>
+
+        <!-- Scene 8: Final Card -->
+        <div id="scene-card" class="scene">
+            <div class="card-wrapper">
+                <div class="card">
+                    <div class="card-front">
+                        <h2>To You</h2>
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <div class="card-inner">
+                        <h3>Dear Friend,</h3>
+                        <p>May your day be filled with endless joy, laughter, and amazing moments. You deserve the world!</p>
+                        <p>Keep shining bright! ✨</p>
+                        <p class="signature">- Your Bestie</p>
+                    </div>
+                </div>
+            </div>
+            <button id="btn-replay" class="btn-small"><i class="fas fa-redo"></i> Replay</button>
+        </div>
+
+    </div>
+
+    <!-- Audio Element -->
+    <audio id="bg-music" loop>
+        <source src="resources/happy-birthday.mp3" type="audio/mp3"> 
+    </audio>
+
+    <script src="app.js"></script>
+</body>
+</html>
