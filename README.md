@@ -66,6 +66,16 @@ Each step triggers its own confetti, sound cues, and progress updates handled in
 
 Because everything is static, deployment to GitHub Pages, Netlify, or any S3 bucket is as simple as uploading the `main` folder.
 
+### 💡 Gemini Variant
+
+If you want the Gemini-generated version of this celebration (auto-written copy & variations), switch to the `gemini` branch:
+
+```bash
+git checkout gemini
+```
+
+That branch contains the original Gemini prompt output plus any assets unique to that flow.
+
 ## 🔧 Customization Guide
 
 1. **Personalize the celebrant's name**  
