@@ -29,6 +29,8 @@ $(document).ready(function() {
     var flippedCards = [];
     var canFlip = true;
     var scratchPercentage = 0;
+    var lastMagicSoundTime = 0;
+    var MAGIC_SOUND_COOLDOWN = 1500; // ms
 
     // Memory game emojis (4 pairs for 3x3 grid with one bonus card)
     var memoryEmojis = ['🎂', '🎁', '🎈', '🎉'];
@@ -274,6 +276,14 @@ $(document).ready(function() {
     // ============================================
     function playSound(type) {
         if (!soundEnabled) return;
+        
+        if (type === 'magic') {
+            var now = Date.now();
+            if (now - lastMagicSoundTime < MAGIC_SOUND_COOLDOWN) {
+                return;
+            }
+            lastMagicSoundTime = now;
+        }
         
         var sound;
         switch(type) {
