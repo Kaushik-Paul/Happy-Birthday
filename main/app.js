@@ -279,6 +279,9 @@ $(document).ready(function() {
             case 'magic':
                 sound = document.getElementById('magicSound');
                 break;
+            case 'candle':
+                sound = document.getElementById('candleSound');
+                break;
             case 'music':
                 sound = document.getElementById('birthdayMusic');
                 break;
@@ -311,7 +314,7 @@ $(document).ready(function() {
                 $flame.addClass('blown');
                 candlesRemaining--;
                 $('#candleCount').text(candlesRemaining);
-                playSound('pop');
+                playSound('candle');
                 
                 if (candlesRemaining === 0) {
                     createConfetti(80);
