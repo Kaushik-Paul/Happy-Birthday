@@ -7,7 +7,7 @@ $(document).ready(function() {
     // ============================================
     // CONFIGURATION - CHANGE THE NAME HERE!
     // ============================================
-    var birthdayName = 'Saurabh Paul';  // <-- CHANGE THIS NAME!
+    var birthdayName = 'Birthday Person Name';  // <-- CHANGE THIS NAME!
 
     // ============================================
     // GLOBAL VARIABLES
