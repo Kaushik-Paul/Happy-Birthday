@@ -15,6 +15,9 @@ $(document).ready(function() {
     var currentStep = 1;
     var totalSteps = 10;
     var soundEnabled = true;
+    var birthdayMusic = null;
+    var musicStarted = false;
+    var audioUnlockHandler = null;
     var balloonsRemaining = 10;
     var candlesRemaining = 5;
     var giftsOpened = 0;
@@ -55,6 +58,7 @@ $(document).ready(function() {
         createFloatingHearts();
         initCursorTrail();
         bindEvents();
+        setupAudioUnlock();
     }
 
     // ============================================
@@ -291,6 +295,36 @@ $(document).ready(function() {
             sound.currentTime = 0;
             sound.play().catch(function() {});
         }
+    }
+
+    function setupAudioUnlock() {
+        birthdayMusic = document.getElementById('birthdayMusic');
+        if (!birthdayMusic) return;
+        
+        audioUnlockHandler = function unlockAudio() {
+            if (musicStarted) {
+                removeAudioUnlockListeners();
+                return;
+            }
+            
+            musicStarted = true;
+            if (soundEnabled) {
+                birthdayMusic.play().catch(function() {});
+            }
+            removeAudioUnlockListeners();
+        };
+        
+        document.addEventListener('click', audioUnlockHandler);
+        document.addEventListener('keydown', audioUnlockHandler);
+        document.addEventListener('touchstart', audioUnlockHandler, { passive: true });
+    }
+
+    function removeAudioUnlockListeners() {
+        if (!audioUnlockHandler) return;
+        document.removeEventListener('click', audioUnlockHandler);
+        document.removeEventListener('keydown', audioUnlockHandler);
+        document.removeEventListener('touchstart', audioUnlockHandler);
+        audioUnlockHandler = null;
     }
 
     // ============================================
